@@ -1,0 +1,64 @@
+{
+    "keyword": "encyclopedia",
+    "urls": [
+        "https://www.wikipedia.org/"
+    ],
+    "left": {
+        "keyword": "current events",
+        "urls": [
+            "https://www.nytimes.com/"
+        ],
+        "left": null,
+        "right": {
+            "keyword": "e-commerce",
+            "urls": [
+                "https://www.amazon.com/"
+            ],
+            "left": null,
+            "right": null
+        }
+    },
+    "right": {
+        "keyword": "knowledge",
+        "urls": [
+            "https://www.wikipedia.org/"
+        ],
+        "left": {
+            "keyword": "journalism",
+            "urls": [
+                "https://www.nytimes.com/"
+            ],
+            "left": null,
+            "right": null
+        },
+        "right": {
+            "keyword": "reference",
+            "urls": [
+                "https://www.wikipedia.org/"
+            ],
+            "left": {
+                "keyword": "news",
+                "urls": [
+                    "https://www.nytimes.com/"
+                ],
+                "left": null,
+                "right": {
+                    "keyword": "products",
+                    "urls": [
+                        "https://www.amazon.com/"
+                    ],
+                    "left": null,
+                    "right": null
+                }
+            },
+            "right": {
+                "keyword": "shopping",
+                "urls": [
+                    "https://www.amazon.com/"
+                ],
+                "left": null,
+                "right": null
+            }
+        }
+    }
+}

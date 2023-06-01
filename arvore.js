@@ -1,6 +1,3 @@
-const fs = require('fs');
-const readline = require('readline');
-
 class TreeNode {
   constructor(keyword) {
     this.keyword = keyword;
@@ -25,7 +22,9 @@ class SearchTree {
     let currentNode = this.root;
     while (true) {
       if (keyword === currentNode.keyword) {
-        currentNode.urls.push(url);
+        if (!currentNode.urls.includes(url)) {
+          currentNode.urls.push(url);
+        }
         return;
       } else if (keyword < currentNode.keyword) {
         if (!currentNode.left) {
@@ -59,62 +58,27 @@ class SearchTree {
     return null;
   }
 
-  saveToFile(filePath) {
-    const data = JSON.stringify(this.root);
-    fs.writeFileSync(filePath, data);
+  toJson() {
+    const treeData = this.traverseTree(this.root);
+    return JSON.stringify(treeData);
   }
 
-  loadFromFile(filePath) {
-    const data = fs.readFileSync(filePath, 'utf8');
-    this.root = JSON.parse(data);
+  traverseTree(node) {
+    if (!node) {
+      return null;
+    }
+
+    const treeData = {
+      keyword: node.keyword,
+      urls: node.urls,
+      left: this.traverseTree(node.left),
+      right: this.traverseTree(node.right),
+    };
+
+    return treeData;
   }
 }
 
-// Cria uma interface de leitura de linha
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-// Função para realizar a busca
-function performSearch(keyword) {
-  const results = searchTree.search(keyword);
-  if (results) {
-    console.log(`Resultados para "${keyword}":`);
-    console.log(results);
-  } else {
-    console.log(`Nenhum resultado encontrado para "${keyword}".`);
-  }
-  rl.close();
-}
-
-// Exemplo de uso
-
-const searchTree = new SearchTree();
-
-// Inserindo dados de exemplo
-searchTree.insert('encyclopedia', 'https://www.wikipedia.org/');
-searchTree.insert('knowledge', 'https://www.wikipedia.org/');
-searchTree.insert('reference', 'https://www.wikipedia.org/');
-
-searchTree.insert('news', 'https://www.nytimes.com/');
-searchTree.insert('journalism', 'https://www.nytimes.com/');
-searchTree.insert('current events', 'https://www.nytimes.com/');
-
-searchTree.insert('shopping', 'https://www.amazon.com/');
-searchTree.insert('e-commerce', 'https://www.amazon.com/');
-searchTree.insert('products', 'https://www.amazon.com/');
-
-// Salvando os dados no arquivo JSON
-searchTree.saveToFile('search_tree.json');
-
-// Carregando os dados do arquivo JSON
-searchTree.loadFromFile('search_tree.json');
-
-// Solicitar palavra-chave para busca
-rl.question('Digite a palavra-chave para buscar: ', (keyword) => {
-  performSearch(keyword);
-
-});
-
-module.exports = arvore.js;
+module.exports = {
+  SearchTree: SearchTree
+};
